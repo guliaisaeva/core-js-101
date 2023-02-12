@@ -158,6 +158,11 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  */
 function isInsideCircle(/* circle, point */) {
   throw new Error('Not implemented');
+  // return (
+  //   Math.sqrt(
+  //     (circle.center.x - point.x) ** 2 + (circle.center.y - point.y) ** 2
+  //   ) < circle.radius
+  // );
 }
 
 /**
@@ -262,8 +267,25 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  const numbers = `${ccn}`
+    .split('')
+    .reverse()
+    .map((item) => Number(item));
+
+  for (let i = 0; i < numbers.length; i += 1) {
+    let digit = numbers[i];
+    if (i % 2) {
+      digit *= 2;
+    }
+    if (digit > 9) {
+      digit -= 9;
+    }
+    sum += digit;
+  }
+
+  return sum % 10 === 0;
 }
 
 /**
@@ -280,8 +302,14 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  if (num < 10) return num;
+  const result = num
+    .toString()
+    .split('')
+    .reduce((acc, curr) => acc + +curr, 0);
+
+  return getDigitalRoot(result);
 }
 
 /**
